@@ -1,0 +1,169 @@
+
+package christianblackjack;
+
+import java.util.Scanner;
+
+public class ChristianBlackJack {
+    public static void main(String[] args)
+    {
+         
+     //opneing statement
+        System.out.println("\t\tWelcome to Christian Blackjack!");
+        System.out.println("\tThis game is to help learn bible verses as you play along!");
+        
+        
+        Deckies playingDecks = new Deckies();//creation of the playing deck
+        playingDecks.creatFullDeck();//creats the deck full of cards
+        playingDecks.shuffle();//shuffles cards
+        Deckies playersDecks = new Deckies(); //players deck
+        
+        Deckies dealersDecks = new Deckies();// Dealers deck
+
+        double playersGoldfish = 100.00;      //starts player with Goldfish to serve as bets
+        double playersWager;
+        int answer;
+        Scanner userInput = new Scanner(System.in);
+        
+        
+        
+        
+        while(playersGoldfish > 0)
+            
+            /**make statment to exit from wagering to much**/
+{
+            //game keeps going
+         
+            System.out.println("You have # "+ playersGoldfish + " of goldfish");
+            System.out.println("How many goldfish would you like to wager?");
+            playersWager = userInput.nextDouble();
+            
+            if (playersWager > playersGoldfish ) //player bets more goldfish owns
+            {
+                System.out.println("Read Proverbs 21:20");
+                break;
+                
+            }
+         
+            
+        boolean roundsup = false;
+        
+        //cards get distruibuted
+        
+        playersDecks.draw(playingDecks);//draws two card for player
+        playersDecks.draw(playingDecks);
+        
+        dealersDecks.draw(playingDecks);//draws two cards for Dealer
+        dealersDecks.draw(playingDecks);
+        
+        while (true)
+        {
+            do{
+            System.out.println("Your current hand:\n"+playersDecks.toString());
+            System.out.println("\nYour decks value is at : "+ playersDecks.handsValue());
+            
+            System.out.println("The Dealer has : "+ dealersDecks.getOneCard(0).toString()+ " and a **hidden card**");
+        
+            System.out.println("Would you like to (1)hit or (2) stand or (0) quite the program?");
+             answer = userInput.nextInt();
+            
+            
+            if (answer == 1) //player hits for another card
+            {
+                playersDecks.draw(playingDecks);
+                System.out.println("You drew a : " + playersDecks.getOneCard(playersDecks.decksize()-1));
+                
+                if(playersDecks.handsValue()>21)
+                {
+                    System.out.println("Busted the value of the cards are: "+ playersDecks.handsValue());//make this into an inter changing bible
+                    playersGoldfish -= playersWager;
+                    roundsup = true;
+                    break;
+                }
+                 if(answer ==2)
+                {
+                     break; 
+                     
+                    }    
+            
+            
+            }
+                 }while(playersDecks.handsValue()<13||answer!=2);
+            
+            System.out.println("Dealers deck: "+ dealersDecks.toString());//show dealer deck
+            
+             if ((dealersDecks.handsValue()>=17) &&  (dealersDecks.handsValue()>playersDecks.handsValue())&& roundsup==false)
+            {
+                System.out.println("Dealer takes your Goldfish...");//add rottation of bible verses
+                playersGoldfish -= playersWager;
+                
+                System.out.println("\tDealers hand is valued at:" + dealersDecks.handsValue());
+                
+                playersDecks.moveWholeDeck(playingDecks);
+                dealersDecks.moveWholeDeck(playingDecks);
+                
+                roundsup =true;
+                break;
+            }
+            while((dealersDecks.handsValue()<17) && roundsup ==false)
+            {
+                dealersDecks.draw(playingDecks);
+                System.out.println("Dealers Draw: "+ dealersDecks.getOneCard(dealersDecks.decksize()-1));
+                
+            }
+            System.out.println("\tDealers hand is valued at:" + dealersDecks.handsValue());
+            if((dealersDecks.handsValue()>21)&& roundsup == false)
+            {
+                System.out.println("Dealer has busted \n YOU WINNNNNN!!!!!");
+                playersGoldfish += playersWager;
+                
+                playersDecks.moveWholeDeck(playingDecks);
+                 dealersDecks.moveWholeDeck(playingDecks);//needs to be in the loop to wipe deck
+            
+                roundsup = true;
+                break;
+            }
+            if(playersDecks.handsValue()== dealersDecks.handsValue()&& roundsup == false)
+            {
+                System.out.println("This is a Push");
+                playersDecks.moveWholeDeck(playingDecks);
+            dealersDecks.moveWholeDeck(playingDecks);
+                roundsup = true;
+                break;
+            }
+            if (playersDecks.handsValue()> dealersDecks.handsValue()&&roundsup==false)
+            {
+                System.out.println("Congrats you won more Goldfish!!!!");
+                playersGoldfish += playersWager;
+                
+                playersDecks.moveWholeDeck(playingDecks);//needs to be in the loop to wipe
+            dealersDecks.moveWholeDeck(playingDecks);
+            
+                roundsup = true;
+                break;
+            }
+            else if(roundsup==false)
+            {
+                System.out.println("You lose the hand!");
+                playersGoldfish -= playersWager;
+                
+                playersDecks.moveWholeDeck(playingDecks);//needs to be in to wipe cards
+                dealersDecks.moveWholeDeck(playingDecks);
+                roundsup =true;
+                break;  //breaks loop
+               
+            }
+            
+            System.out.println("End of hand");
+        }
+        
+        System.out.println("GAME IS NOW OVER");
+   
+    
+ 
+    }
+}
+    
+      
+        
+        }
+
