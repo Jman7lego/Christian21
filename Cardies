@@ -1,0 +1,27 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package christianblackjack;
+
+public class Cardies
+{
+    private Suit suit;
+    private Value value;
+    
+    public Cardies(Suit suit, Value value)
+    {
+        this.value = value;
+        this.suit = suit;
+    }
+    public String toString()
+    {                                  
+        return this.value.toString() + " of " + this.suit.toString(); //combins suit and value
+    }
+    public Value getValue()//checks value of the cards
+    {
+        return this.value;
+    }
+            
+}
