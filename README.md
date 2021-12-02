@@ -1,0 +1,2 @@
+# Christian21
+For this project, I want to make a more PG version of 21. In this version, I hope to make multiple users so more than one hand is played at once for a group to play, I'm hoping to have a print statement that prints out bible verses that help with learning and show that true gambling is bad this will be done with txt file most likely, lastly, I'm planning on implementing JavaFx to make the game more friendly to the user's eyes. This is all in the hopes of having a fun experience that one will get while gambling without the harsh reality.
