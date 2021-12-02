@@ -1,0 +1,140 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package christianblackjack;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Deckies//instances of vars
+{
+    private ArrayList<Cardies> cards;
+    
+    public Deckies() //constructor
+    {
+        this.cards = new ArrayList<Cardies>();
+    }
+    
+    public void creatFullDeck() //generates all the cards
+    {
+        for(Suit cardSuit : Suit.values())//makes a set of cards with each suit for a total of 52
+        {
+            for(Value cardValue : Value.values())
+            {
+                this.cards.add(new Cardies(cardSuit,cardValue));
+            }
+        }
+    }
+    public void shuffle()//takes random cards and put it into a new stack for a radom array
+    {
+        ArrayList<Cardies>temperaryDeck = new ArrayList<Cardies>();
+        
+        Random random = new Random();
+        int randomCards =0;
+        int ogSize = this.cards.size();
+        for(int i=0;i<ogSize; i++) //shuffles
+        {
+            randomCards = random.nextInt((this.cards.size()-1 -0)+1)+0;
+            temperaryDeck.add(this.cards.get(randomCards));//adds card to random deck
+            this.cards.remove(randomCards);// removes card form original deck so no dublicates
+        }
+        this.cards = temperaryDeck;// placed back into deck
+    }
+    public String toString()
+    {
+        String cardListOutput = "";
+     
+        for (Cardies aCards : this.cards)
+        {
+            cardListOutput += "\n" + aCards.toString();//makes string with all card value in it
+          
+        }
+        return cardListOutput;
+    }
+    
+    public int decksize()
+    {
+        return this.cards.size();//makes the size of the deck
+    }
+    
+    public Cardies getOneCard (int i)
+    {
+        return this.cards.get(i); //move cards around
+    }
+    
+    public void removeOnecard(int i)
+    {
+        this.cards.remove(i);//removes one card from array
+        
+    }
+    public void addOneCard(Cardies addCards)
+    {
+        this.cards.add(addCards); //adding a card
+    }
+    
+    public void draw(Deckies comingFrom)//draws cards from the deck
+    {
+        this.cards.add(comingFrom.getOneCard(0));//takes a card from deck
+        comingFrom.removeOnecard(0);// removes the card from the deck
+    }
+    
+     public void moveWholeDeck(Deckies moveTo)
+        {
+            int thisDeckSize = this.cards.size();
+            
+            for(int i=0;i< thisDeckSize; i++)
+            {
+                moveTo.addOneCard(this.getOneCard(i));
+            }
+                
+            
+         for (int i = 0; i < thisDeckSize; i++)
+             {
+                     this.removeOnecard(0);
+                 }
+       
+        }
+     
+    
+     
+    public int handsValue() //calculates value of cards
+    {
+        int totalValue=0;
+        int aces =0;//since ace can be 11 or 1 need to count seperatly
+        for (Cardies aCard : this.cards)
+        {
+            switch(aCard.getValue())
+            {
+                case Two: totalValue +=2; break;
+                case Three: totalValue +=3;break;
+                case Four: totalValue +=4;break;
+                case Five: totalValue +=5;break;
+                case Six: totalValue +=6;break;
+                case Seven: totalValue +=7;break;
+                case Eight: totalValue +=8;break;
+                case Nine: totalValue +=9;break;
+                case Ten: totalValue +=10;break;
+                case Jack: totalValue +=10;break;
+                case Queen: totalValue +=10;break;
+                case King: totalValue +=10;break;
+                case Ace: aces +=1;break;
+                
+            }
+        }
+       
+        for(int i=0; i<aces;i++)//checking what it the best value of the aces 10 or 1
+        {
+            if (totalValue >10)//if its more then 10 then its a bust
+            {
+                totalValue +=1;
+            }
+            else
+            {
+                totalValue +=11;//if its not 10 then best choice is to have 11 for one ace
+            }
+        }
+        return totalValue;
+    }
+}
